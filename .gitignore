@@ -1,0 +1,14 @@
+# Mac OS
+.DS_Store
+
+# Materials
+*.pdf
+
+# python cache
+*__pycache__/
+*.py[cod]
+
+# executables, object
+*.exe
+*.out
+*.o
