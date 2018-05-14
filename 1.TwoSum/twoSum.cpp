@@ -3,39 +3,24 @@
 #include <map>
 
 using std::vector;
-using std::multimap;
+using std::map;
 using std::cin;
 using std::cout;
 using std::endl;
 
 class Solution {
 public:
-    vector<int> twoSum(vector<int>& nums, int target) {
-        vector<int> answer;
-        multimap<int, int> indices;
-        int count = 0;
-        for(auto &n : nums) {
-            indices.insert({n, count++}); // {num, index}, auto sorted by num
+    vector<int> twoSum(vector<int>& nums, int target) { // O(n * log(n)) if search is log(n)
+        if(nums.size() == 2) { return {0, 1}; } // solution existence guaranteed
+        map<int, int> indices; // exactly one solution -> duplicates are useless or answer
+        for(int i = 0; i != nums.size(); ++i) {
+            auto it = indices.find(target - nums[i]);
+            if(it != indices.end()) { // found
+                return {indices[target - nums[i]], i};
+            }
+            indices.insert({nums[i], i}); // {num, index}, will not insert duplicate
         }
-        auto head = indices.begin(); // smallest num
-        auto tail = indices.end();
-        --tail; // biggest num
-        while(head != tail) {
-            if(head -> first + tail -> first == target) { // match!
-                answer.push_back(head -> second); // return indices
-                answer.push_back(tail -> second);
-                break;
-            }
-            if(head -> first + tail -> first < target) { // more!
-                ++head;
-                continue;
-            }
-            if(head -> first + tail -> first > target) { // less!
-                --tail;
-                continue;
-            }
-        }
-        return answer;
+        // will not reach here
     }
 };
 
