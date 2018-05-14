@@ -18,7 +18,7 @@ public:
             if(it != indices.end()) { // found
                 return {indices[target - nums[i]], i};
             }
-            indices.insert({nums[i], i}); // {num, index}, will not insert duplicate
+            indices.insert({nums[i], i}); // will not insert duplicate
         }
         // will not reach here
     }
