@@ -1,3 +1,6 @@
+/*
+ * use map to record index and search appeared number
+ */
 #include <iostream>
 #include <vector>
 #include <map>

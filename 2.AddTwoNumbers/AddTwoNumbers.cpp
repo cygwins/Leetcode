@@ -1,3 +1,6 @@
+/*
+ * add up digit by digit, with a carry
+ */
 #include <iostream>
 
 struct ListNode {

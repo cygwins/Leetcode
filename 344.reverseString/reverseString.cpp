@@ -1,3 +1,6 @@
+/* 
+ * use library function reverse
+ */
 #include <iostream>
 #include <algorithm>
 #include <string>
