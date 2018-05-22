@@ -32,20 +32,21 @@ void output(ListNode &l) {
 class Solution {
 public:
     ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
-        static int carry = 0;
-        if(!l1 && !l2 && !carry) { return NULL; }
-        ListNode *answer = new ListNode(0);
-        answer -> val += carry; // of last digit
-        carry = 0;
-        if(l1) { answer -> val += l1 -> val; l1 = l1 -> next; }
-        if(l2) { answer -> val += l2 -> val; l2 = l2 -> next; }
-        // std::cout << "val " << answer -> val << std::endl;
-        // std::cout << "carry " << carry << std::endl;
-        carry = answer -> val / 10;
-        answer -> val %= 10;
-        // output(*answer);
-        answer -> next = addTwoNumbers(l1, l2);
-        return answer;
+        int carry = 0, digit = 0;
+        ListNode head(0), *p = &head;
+        while(l1 || l2 || carry) {
+            digit = carry; // of last digit
+            if(l1) { digit += l1 -> val; l1 = l1 -> next; }
+            if(l2) { digit += l2 -> val; l2 = l2 -> next; }
+            // std::cout << "val " << answer -> val << std::endl;
+            // std::cout << "carry " << carry << std::endl;
+            carry = digit / 10;
+            digit %= 10;
+            // output(*answer);
+            p -> next = new ListNode(digit);
+            p = p -> next;
+        }
+        return head.next;
     }
 };
 
