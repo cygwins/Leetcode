@@ -15,8 +15,8 @@ class Solution {
 public:
     vector<int> twoSum(vector<int>& nums, int target) { // O(n * log(n)) if search is log(n)
         if(nums.size() == 2) { return {0, 1}; } // solution existence guaranteed
-        map<int, int> indices; // exactly one solution -> duplicates are useless or answer
-        for(int i = 0; i != nums.size(); ++i) {
+        map<int, size_t> indices; // exactly one solution -> duplicates are useless or answer
+        for(size_t i = 0; i != nums.size(); ++i) {
             auto it = indices.find(target - nums[i]);
             if(it != indices.end()) { // found
                 return {indices[target - nums[i]], i};
