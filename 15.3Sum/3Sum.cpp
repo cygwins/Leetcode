@@ -8,7 +8,6 @@
 #include <set>
 
 using std::vector;
-using std::set;
 using std::cin;
 using std::cout;
 using std::endl;
@@ -33,13 +32,13 @@ void output(vector<vector<int>> &nums) {
 class Solution {
 public:
     vector<vector<int>> threeSum(vector<int>& nums) { // O(n^2 * log(n)) if search is log(n)
-        if(nums.size() < 3) {
-            return vector<vector<int>>{};
-        } // no solution
+        if(nums.size() < 3) { // insufficient nums
+            return {};
+        }
         sort(nums.begin(), nums.end()); // sort in ascending order
-        if(nums[0] > 0 || nums[nums.size() - 1] < 0) {
-            return vector<vector<int>>{};
-        } // no solution
+        if(nums[0] > 0 || nums[nums.size() - 1] < 0) { // too big / too small
+            return {};
+        }
         int prev = nums[0] + 1, count = 0; // remove unnecessary repeat
         for(auto it = nums.begin(); it != nums.end(); ) {
             if(*it != prev) {
@@ -55,29 +54,26 @@ public:
                 nums.erase(it);
             }
         }
-        set<vector<int>> answers;
-        for(size_t a = 0; a < nums.size() - 2 && nums[a] <= 0; ++a) {
-            size_t b = a + 1;
-            size_t c = nums.size() - 1;
+        vector<vector<int>> answers;
+        size_t a = 0, b, c;
+        while(a < nums.size() - 2 && nums[a] <= 0) {
+            b = a + 1;
+            c = nums.size() - 1;
             while(b < c) {
                 int sum = nums[a] + nums[b] + nums[c];
-                /*
-                cout << "   nums[" << a << "] = " << nums[a]
-                     << " + nums[" << b << "] = " << nums[b]
-                     << " + nums[" << c << "] = " << nums[c]
-                     << " = " << sum << (sum == 0 ? " == " :
-                         (sum < 0 ? " < " : " > ")) << "0" << endl;
-                */
+                // cout << nums[a] << " + " << nums[b] << " + " << nums[c] << " = " << sum
+                //      << (sum == 0 ? " ==" : (sum < 0 ? " <" : " >")) << " 0" << endl;
                 if(sum == 0) {
-                    answers.insert({nums[a], nums[b], nums[c]});
-                    ++b;
-                    --c;
+                    answers.push_back({nums[a], nums[b], nums[c]});
+                    do { ++b; } while(b < c && nums[b] == nums[b - 1]);
+                    do { --c; } while(b < c && nums[c] == nums[c + 1]);
                 }
-                else if (sum < 0) { ++b; }
-                else if (sum > 0) { --c; }
+                else if (sum < 0) { do { ++b; } while(b < c && nums[b] == nums[b - 1]); }
+                else if (sum > 0) { do { --c; } while(b < c && nums[c] == nums[c + 1]); }
             }
+            do { ++a; } while(a < nums.size() && nums[a] == nums[a - 1]);
         }
-        return vector<vector<int>>(answers.begin(), answers.end());
+        return answers;
     }
 };
 
