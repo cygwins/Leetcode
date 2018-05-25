@@ -5,10 +5,10 @@
 // #include <algorithm>
 #include <vector>
 #include <map>
+#include <set>
 
 using std::vector;
-using std::multimap;
-using std::pair;
+using std::set;
 using std::cin;
 using std::cout;
 using std::endl;
@@ -33,30 +33,51 @@ void output(vector<vector<int>> &nums) {
 class Solution {
 public:
     vector<vector<int>> threeSum(vector<int>& nums) { // O(n^2 * log(n)) if search is log(n)
-        if(nums.size() < 3) { return {}; } // no solution
+        if(nums.size() < 3) {
+            return vector<vector<int>>{};
+        } // no solution
         sort(nums.begin(), nums.end()); // sort in ascending order
-        vector<vector<int>> answers;
-        multimap<int, pair<int, int>> twoSum; // can be added up by two number
-        for(size_t i = 0; i != nums.size(); ++i) { // consider nums[i] as third in triplet
-            auto twoRange = twoSum.equal_range(0 - nums[i]); // all matched first two's
-            for(auto two = twoRange.first; two != twoRange.second; ++two) {
-                vector<int> ans{two->second.first, two->second.second, nums[i]};
-                if(find(answers.begin(), answers.end(), ans) == answers.end()) {
-                    answers.push_back(ans); // new answer
-                    // output(answers);
-                }
+        if(nums[0] > 0 || nums[nums.size() - 1] < 0) {
+            return vector<vector<int>>{};
+        } // no solution
+        int prev = nums[0] + 1, count = 0; // remove unnecessary repeat
+        for(auto it = nums.begin(); it != nums.end(); ) {
+            if(*it != prev) {
+                count = 1;
+                prev = *it;
+                ++it;
             }
-            if(i > 1 && nums[i] == nums[i - 2]) { continue; } // no need to update pair
-            if(i > 0 && nums[i] == nums[i - 1]) { // only update this pair
-                twoSum.insert({nums[i]+nums[i], {nums[i], nums[i]}});
-                continue;
+            else if (count < 2 || (count < 3 && *it == 0)) {
+                ++count;
+                ++it;
             }
-            for(size_t j = 0; j != i; ++j) { // update pair
-                twoSum.insert({nums[j]+nums[i], {nums[j], nums[i]}});
+            else {
+                nums.erase(it);
             }
         }
-        sort(answers.begin(), answers.end());
-        return answers;
+        set<vector<int>> answers;
+        for(size_t a = 0; a < nums.size() - 2 && nums[a] <= 0; ++a) {
+            size_t b = a + 1;
+            size_t c = nums.size() - 1;
+            while(b < c) {
+                int sum = nums[a] + nums[b] + nums[c];
+                /*
+                cout << "   nums[" << a << "] = " << nums[a]
+                     << " + nums[" << b << "] = " << nums[b]
+                     << " + nums[" << c << "] = " << nums[c]
+                     << " = " << sum << (sum == 0 ? " == " :
+                         (sum < 0 ? " < " : " > ")) << "0" << endl;
+                */
+                if(sum == 0) {
+                    answers.insert({nums[a], nums[b], nums[c]});
+                    ++b;
+                    --c;
+                }
+                else if (sum < 0) { ++b; }
+                else if (sum > 0) { --c; }
+            }
+        }
+        return vector<vector<int>>(answers.begin(), answers.end());
     }
 };
 
