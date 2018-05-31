@@ -1,0 +1,83 @@
+/*
+ * Binary Search for divider i of shorter array (m <= n)
+ * a[0] .. a[i-1] | a[i] .. a[m-1], i = 0 .. m
+ * b[0] .. b[j-1] | b[j] .. b[n-1], j = 0 .. n
+ * #left == #right || #right - 1
+ */
+#include <iostream>
+#include <algorithm> // max min
+#include <vector>
+
+using std::vector;
+
+class Solution {
+public:
+    double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
+        int m = nums1.size(), n = nums2.size();
+        if(m > n) { return findMedianSortedArrays(nums2, nums1); } // ensure m <= n
+        if(m == 0) { // a empty, b is not
+            return median(nums1, nums2, 0);
+        }
+        int imin = 0, imax = m, i, j;
+        while(imin < imax) {
+            i = (imin + imax) / 2;
+            j = (m + n) / 2 - i;
+            // std::cout << "min " << imin << ", max " << imax << std::endl;
+            // std::cout << "i = " << i << ", j = " << j << std::endl;
+            // std::cout << "left " << left(nums1, nums2, i) << std::endl;
+            // std::cout << "right " << right(nums1, nums2, i) << std::endl;
+            // char t; // pause
+            // std::cin >> t;
+            if(j < 0 || (i > 0 && j < n && nums1[i - 1] > nums2[j])) { // i too big
+                imax = i - 1;
+                continue;
+            }
+            else if(j > n || (i < m && j > 0 && nums1[i] < nums2[j - 1])) { // i too small
+                imin = i + 1;
+                continue;
+            }
+            else { // lucky guess
+                return median(nums1, nums2, i);
+            }
+        } // imin >= imax here
+        return median(nums1, nums2, imin);
+    }
+    inline int left(vector<int>& nums1, vector<int>& nums2, const int i) { // biggist of left
+        int m = nums1.size(), n = nums2.size();
+        int j = (m + n) / 2 - i;
+        if(i == 0) { // a left is empty
+            return nums2[j - 1];
+        }
+        if(j == 0) { // b left is empty
+            return nums1[i - 1];
+        }
+        return std::max(nums1[i - 1], nums2[j - 1]);
+    }
+    inline int right(vector<int>& nums1, vector<int>& nums2, const int i) { // smallest of right
+        int m = nums1.size(), n = nums2.size();
+        int j = (m + n) / 2 - i;
+        if(i == m) { // a right is empty
+            return nums2[j];
+        }
+        if(j == n) { // b right is empty
+            return nums1[i];
+        }
+        return std::min(nums1[i], nums2[j]);
+    }
+    inline double median(vector<int>& nums1, vector<int>& nums2, const int i) {
+        int m = nums1.size(), n = nums2.size();
+        if((n + m) % 2) { // n + m is odd
+            return static_cast<double>(right(nums1, nums2, i));
+        }
+        else { // n + m is even
+            return (left(nums1, nums2, i) + right(nums1, nums2, i)) / 2.0;
+        }
+    }
+};
+
+int main() {
+    Solution s;
+    vector<int> a{1,3}, b{2}, c{1}, d{2,3,4,5};
+    std::cout << s.findMedianSortedArrays(c, d) << std::endl;
+    return 0;
+}
