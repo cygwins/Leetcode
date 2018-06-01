@@ -8,6 +8,11 @@
 #include <algorithm> // max min
 #include <vector>
 
+#define CATCH_CONFIG_MAIN  // This tells Catch to provide a main() - only do this in one cpp file
+// #define CATCH_CONFIG_RUNNER // if our own main() is provided
+#include "catch.hpp" // define CATCH_CONFIG_MAIN / CATCH_CONFIG_RUNNER before including header
+
+
 using std::vector;
 
 class Solution {
@@ -75,9 +80,17 @@ public:
     }
 };
 
-int main() {
+TEST_CASE( "Medians are computed", "[findMedianSortedArrays]" ) {
     Solution s;
-    vector<int> a{1,3}, b{2}, c{1}, d{2,3,4,5};
-    std::cout << s.findMedianSortedArrays(c, d) << std::endl;
-    return 0;
+    vector<int> a{1,3}, b{2}, c{1}, d{2,3,4,5}, e{};
+    REQUIRE( s.findMedianSortedArrays(a, b) == 2.0 );
+    REQUIRE( s.findMedianSortedArrays(c, d) == 3.0 );
+    REQUIRE( s.findMedianSortedArrays(d, e) == 3.5 );
 }
+
+/*
+int main() {
+    int result = Catch::Session().run();
+    return result;
+}
+*/
