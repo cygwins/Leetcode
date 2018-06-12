@@ -22,8 +22,8 @@ public:
             E[p.first].push_back(p.second);
             E[p.second].push_back(p.first);
         }
-        d = 0; maxL = 0; DFS(0, -1, f);
-        d = 0; maxL = 0; DFS(f, -1, g);
+        d = 0; maxL = 0; DFS(0, -1); f = farthest;
+        d = 0; maxL = 0; DFS(f, -1); g = farthest;
         vector<int> answer;
         int u = g;
         for(int i = 0; i < maxL / 2; ++i) { // find mid point
@@ -36,11 +36,11 @@ public:
         return answer;
     }
 private:
-    int f, g; // 0 -> f, f -> g
+    int farthest, f, g; // 0 -> f, f -> g
     int d, maxL; // current depth, length of longest path
     vector<vector<int>> E; // adjacency list
     vector<int> prev;
-    void DFS(int u, int parent, int &farthest) {
+    void DFS(int u, int parent) {
         for(auto &v : E[u]) {
             if(v != parent) {
                 ++d;
@@ -49,7 +49,7 @@ private:
                     maxL = d;
                     farthest = v;
                 }
-                DFS(v, u, farthest);
+                DFS(v, u);
                 --d;
             }
         }

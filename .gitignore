@@ -12,3 +12,6 @@
 *.exe
 *.out
 *.o
+
+# java class file
+*.class
