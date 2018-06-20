@@ -3,6 +3,7 @@
 
 # Materials
 *.pdf
+*.txt
 
 # python cache
 *__pycache__/
