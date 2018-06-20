@@ -1,5 +1,5 @@
 /*
- * brief
+ * count each number in same row / column / region
  */
 #include <iostream>
 #include <vector>
