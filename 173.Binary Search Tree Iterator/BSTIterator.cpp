@@ -5,25 +5,17 @@
 #include <cstdio>
 #include <stack>
 #include <vector>
+#include "../Tree.hpp"
 #include "catch.hpp"
 using std::stack;
 using std::vector;
+using namespace Tree;
 
 static int n = []() {
     std::ios::sync_with_stdio(false);
     std::cin.tie(NULL);
     return 0;
 }();
-
-/**
- * Definition for binary tree
- */
-struct TreeNode {
-    int val;
-    TreeNode *left;
-    TreeNode *right;
-    TreeNode(int x) : val(x), left(NULL), right(NULL) {}
-};
 
 class BSTIterator {
 public:
@@ -62,18 +54,15 @@ private:
  */
 
 TEST_CASE("iterating", "[next]") {
-    /* Tree: [2,1,4,null,null,3,5] // TODO: tree parsing
+    /* Tree: [2,1,4,null,null,3,5]
      *      2
      *    /   \
      *   1     4
      *       /   \
      *      3     5
      */
-    TreeNode n1(1), n2(2), n3(3), n4(4), n5(5);
-    n2.left = &n1; n2.right = &n4;
-    n4.left = &n3; n4.right = &n5;
     vector<int> seq;
-    BSTIterator i = BSTIterator(&n2);
+    BSTIterator i = BSTIterator(parseTree("[2,1,4,null,null,3,5]"));
     while(i.hasNext()) seq.push_back(i.next());
     CHECK(vector<int>{1,2,3,4,5} == seq);
 }

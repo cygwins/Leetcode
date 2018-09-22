@@ -18,6 +18,7 @@
 #include "catch.hpp"
 using std::vector;
 using std::max;
+using namespace Tree;
 
 class Solution {
 public:
@@ -67,7 +68,4 @@ TEST_CASE("traversing", "[longestUnivaluePath]") {
 
     // all diff
     CHECK(s.longestUnivaluePath(parseTree("[1,2,3,4,5,6]")) == 0);
-
-    // test my new Tree parser & printer
-    CHECK(printTree(parseTree("[1,null,2,null,3]")) == "[1,null,2,null,3]");
 }

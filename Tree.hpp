@@ -7,6 +7,9 @@
 #include <locale>
 #include <memory>
 
+namespace Tree
+{
+
 struct TreeNode {
     int val;
     TreeNode *left;
@@ -108,5 +111,7 @@ std::string printTree(TreeNode* root) {
     for(auto it = out.begin() + 1; it != out.end(); ++it) s += "," + *it;
     s += "]";
     return s;
+}
+
 }
 #endif
