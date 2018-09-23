@@ -1,15 +1,8 @@
 #include <iostream>
-#include <cstdio>
 #include <string>
 #include "catch.hpp"
 using std::string;
 using std::cin;
-
-static int n = []() { 
-    std::ios::sync_with_stdio(false); 
-    cin.tie(NULL);  
-    return 0; 
-}();
 
 class Solution {
 public:

@@ -3,16 +3,9 @@
  * add the newly introduced set on each success expand
  */
 #include <iostream>
-#include <cstdio>
 #include <vector>
 #include "catch.hpp"
 using std::vector;
-
-static int n = []() {
-    std::ios::sync_with_stdio(false);
-    std::cin.tie(NULL);
-    return 0;
-}();
 
 class Solution {
 public:

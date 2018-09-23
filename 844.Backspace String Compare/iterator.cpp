@@ -3,19 +3,12 @@
  * space complexity is O(1)
  */
 #include <iostream>
-#include <cstdio>
 #include <string>
 #include <stack>
 #include "catch.hpp"
 using std::string;
 using std::cin;
 using std::stack;
-
-static int n = []() { 
-    std::ios::sync_with_stdio(false); 
-    cin.tie(NULL);  
-    return 0; 
-}();
 
 class Solution {
 public:

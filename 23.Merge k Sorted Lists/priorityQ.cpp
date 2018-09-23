@@ -13,7 +13,6 @@ using namespace List;
 class Solution {
 public:
     ListNode* mergeKLists(vector<ListNode*>& lists) {
-        // if( lists.empty ) return NULL;
         int K = lists.size();
         // compare func, return true if the first argument comes "before" the second in the order
         //  (usually returns true when first is smaller than second).
@@ -24,7 +23,7 @@ public:
         for(int i = 0; i < K; ++i) {
             if( lists[i] ) q.push( lists[i] );
         }
-        if( q.empty() ) return NULL;
+        if( q.empty() ) return nullptr;
         auto head = q.top(), tail = head;
         while( q.size() > 1 ) {
             if( tail -> next ) q.push( tail -> next );
@@ -40,7 +39,7 @@ TEST_CASE("processing", "[methodName]") {
     Solution s;
     vector<ListNode*> lists0;
     CHECK( printList( s.mergeKLists(lists0) ) == "" );
-    lists0.push_back( NULL );
+    lists0.push_back( nullptr );
     CHECK( printList( s.mergeKLists(lists0) ) == "" );
     vector<ListNode*> lists1{ parseList("1") };
     CHECK( printList( s.mergeKLists(lists1) ) == "1" );

@@ -11,7 +11,7 @@ using namespace Tree;
 
 static int n = []() {
     std::ios::sync_with_stdio(false);
-    std::cin.tie(NULL);
+    std::cin.tie(nullptr);
     return 0;
 }();
 

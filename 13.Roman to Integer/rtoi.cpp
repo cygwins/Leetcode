@@ -1,17 +1,10 @@
 #include <iostream>
-#include <cstdio>
 #include <string>
 #include <unordered_map>
 #include "catch.hpp"
 using std::string;
 using std::cin;
 using std::unordered_map;
-
-static int n = []() { 
-    std::ios::sync_with_stdio(false); 
-    cin.tie(NULL);  
-    return 0; 
-}();
 
 class Solution {
 public:

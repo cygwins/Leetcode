@@ -2,7 +2,6 @@
  * brief
  */
 #include <iostream>
-#include <cstdio>
 #include <stack>
 #include <vector>
 #include "../Tree.hpp"
@@ -10,12 +9,6 @@
 using std::stack;
 using std::vector;
 using namespace Tree;
-
-static int n = []() {
-    std::ios::sync_with_stdio(false);
-    std::cin.tie(NULL);
-    return 0;
-}();
 
 class BSTIterator {
 public:

@@ -9,7 +9,7 @@ namespace List
 struct ListNode {
     int val;
     ListNode *next;
-    ListNode(int x) : val(x), next(NULL) { }
+    ListNode(int x) : val(x), next(nullptr) { }
 };
 
 ListNode* parseNode(std::string &s) { // take out first node
@@ -17,12 +17,12 @@ ListNode* parseNode(std::string &s) { // take out first node
     std::string n = s.substr(0, delim);
     if(delim == std::string::npos) s.erase(s.begin(), s.end());
     else s.erase(s.begin(), s.begin() + delim + 2); // erase '->' too
-    if(n.empty()) return NULL;
+    if(n.empty()) return nullptr;
     return new ListNode(std::stoi(n));
 }
 
 ListNode* parseList(std::string s) {
-    if(s.empty()) return NULL;
+    if(s.empty()) return nullptr;
     ListNode *head = parseNode(s), *tail = head;
     while(!s.empty()) {
         tail -> next = parseNode(s);

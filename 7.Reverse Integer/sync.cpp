@@ -1,23 +1,8 @@
 #include <iostream>
-#include <cstdio>
 #include "catch.hpp"
 using std::cin;
 using std::cout;
 using std::endl;
-
-static int x = []() { 
-    std::ios::sync_with_stdio(false); 
-    cin.tie(NULL);  
-    cout << "x" << endl;
-    return 0; 
-}();
-static int pr = []() { 
-    std::ios::sync_with_stdio(false); 
-    cin.tie(NULL);  
-    cout << "pr" << endl;
-    return 0; 
-}();
-
 
 class Solution {
 public:

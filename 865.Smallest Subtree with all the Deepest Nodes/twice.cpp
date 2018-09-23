@@ -14,9 +14,9 @@ using std::map;
 class Solution {
 public:
     TreeNode* subtreeWithAllDeepest(TreeNode* root) {
-        if( ! root ) return NULL;
+        if( ! root ) return nullptr;
         nodeDepth.clear();
-        nodeDepth[NULL] = 0;
+        nodeDepth[nullptr] = 0;
         getDepth( root ); // traverse through the tree to get depth of each node
         TreeNode* ans = root;
         while( nodeDepth[ans -> left] != nodeDepth[ans -> right] ) {

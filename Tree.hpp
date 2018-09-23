@@ -14,7 +14,7 @@ struct TreeNode {
     int val;
     TreeNode *left;
     TreeNode *right;
-    TreeNode(int x) : val(x), left(NULL), right(NULL) { }
+    TreeNode(int x) : val(x), left(nullptr), right(nullptr) { }
 };
 
 // trim from start (in place)
@@ -62,17 +62,17 @@ TreeNode* parseNode(std::string &s) { // take out first node
     if(delim == std::string::npos) s.erase(s.begin(), s.end());
     else s.erase(s.begin(), s.begin() + delim + 1); // erase ',' too
     trim(n);
-    if(n.empty() || n == std::string{"null"}) return NULL;
+    if(n.empty() || n == std::string{"null"}) return nullptr;
     return new TreeNode(std::stoi(n));
 }
 
 TreeNode* parseTree(std::string s) {
     trim(s);
-    if(s.empty()) return NULL;
+    if(s.empty()) return nullptr;
     if(s.front() == '[') s.erase(s.begin());
     if(s.back() == ']') s.erase(s.end() - 1);
     trim(s);
-    if(s.empty()) return NULL;
+    if(s.empty()) return nullptr;
     TreeNode *root = parseNode(s);
     std::queue<TreeNode*> q;
     q.push(root);

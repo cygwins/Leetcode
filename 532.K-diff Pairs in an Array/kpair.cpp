@@ -14,7 +14,7 @@ using std::unordered_map;
 
 static int n = []() { 
     std::ios::sync_with_stdio(false); 
-    cin.tie(NULL);  
+    cin.tie(nullptr);  
     return 0; 
 }();
 

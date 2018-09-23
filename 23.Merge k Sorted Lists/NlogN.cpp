@@ -19,7 +19,7 @@ using namespace List;
 class Solution {
 public:
     ListNode* mergeKLists(vector<ListNode*>& lists) {
-        if( lists.empty() ) return NULL;
+        if( lists.empty() ) return nullptr;
         int n = lists.size();
         for(int i = 1; i < n; i *= 2) { // i: who 0 merges with
             for(int j = 0; j < n; j += 2 * i) {
