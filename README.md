@@ -1,4 +1,4 @@
-My solutions to [Leetcode](leetcode.com) problems.
+My solutions to [Leetcode](http://www.leetcode.com) problems.
 
 Using C++11 standard
 
