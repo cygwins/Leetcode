@@ -1,6 +1,6 @@
 /*
  * DFS, store all possible outcome for current state, return best for that player
- * state: ( Mouse position, Cat position, who's turn ) 1=mouse's turn, 2=cat's turn
+ * state: ( Mouse position, Cat position, who's turn )
  * Time Limit Exceed for simple DFS, must prune with hash table
  */
 #include <iostream>
@@ -89,9 +89,8 @@ TEST_CASE( "searching", "[catMouseGame]" ) {
     //  \ /
     //   0
     vector<vector<int>> g2{{2,3},{3,4},{0,4},{0,1},{1,2}};
-    CHECK( s.catMouseGame(g2) == 1 ); // draw
+    CHECK( s.catMouseGame(g2) == 1 );
 
-    // (too complex to draw)
     vector<vector<int>> g3{{2,4,7,8},{2,3,4,5,7,8,9},{0,1,3,4,5,7,8,9},{1,2,5},{0,1,2,5,6,7,9},{1,2,3,4,6,7},{4,5,8,9},{0,1,2,4,5,9},{0,1,2,6,9},{1,2,4,6,7,8}};
     CHECK( s.catMouseGame(g3) == 2 ); // TLE for dfs only
 
