@@ -14,62 +14,82 @@ public:
     const int draw = 0, mouseWin   = 1, catWin   = 2;
     const int           mouseTurn  = 1, catTurn  = 0;
     int d = 0;
+    vector<vector<int>> G; // graph
+    vector<vector<vector<int>>> table; // who wins table
+    vector<vector<vector<char>>> on; // whether on current path // vector<bool> is specialized, can't be referred
 
     int catMouseGame( vector<vector<int>> &graph ) {
         int N = graph.size();
-        // std::cout << std::endl << "N = " << N << std::endl;
-        auto table = vector<vector<vector<int>>>( N, vector<vector<int>>( N, vector<int>( 2, -1 ) ) );
-        return check( mouseStart, catStart, mouseTurn, table, graph );
+        // auto table = vector<vector<vector<int>>>( N, vector<vector<int>>( N, vector<int>( 2, -1 ) ) );
+        G = graph;
+        table = vector<vector<vector<int>>>( N, vector<vector<int>>( N, vector<int>( 2, -1 ) ) );
+        on = vector<vector<vector<char>>>( N, vector<vector<char>>( N, vector<char>( 2, 'N' ) ) );
+        on[ mouseStart ][ catStart ][ mouseTurn ] = 'Y';
+        return check( mouseStart, catStart, mouseTurn );
     }
 
-    int check( int mousePos, int catPos, int turn, vector<vector<vector<int>>> &table, vector<vector<int>> &graph ) {
+    int check( int mousePos, int catPos, int turn ) {
         int &current = table[ mousePos ][ catPos ][ turn ];
         if( current != -1 ) return current;
-        current = draw; // visited, if no win strategy is found, draw is the best result
+        // current = draw; // visited, if no win strategy is found, draw is the best result
         bool canDraw = false;
         if( turn == mouseTurn ) { // Mouse's turn
-            for( int &mouseDes : graph[ mousePos ] ) if( mouseDes == hole ) {
-                // std::cout << d << "[" << mousePos << "][" << catPos << "][m] = mouse: sweet home" << std::endl;
+            for( int &mouseDes : G[ mousePos ] ) if( mouseDes == hole ) {
+                std::cout << d << "[" << mousePos << "][" << catPos << "][m] = home" << std::endl;
                 return current = mouseWin; // check for win first
             }
-            for( int &mouseDes : graph[ mousePos ] ) {
+            for( int &mouseDes : G[ mousePos ] ) {
                 if( mouseDes == catPos ) continue; // don't run into cat
-                d++;
-                int ans = check( mouseDes, catPos, catTurn, table, graph );
-                d--;
-                if( ans == mouseWin ) {
-                    std::cout << d << "[" << mousePos << "][" << catPos << "][m] = mouse" << std::endl;
-                    return current = mouseWin;
+                char &onPath = on[ mouseDes ][ catPos ][ catTurn ];
+                if( onPath == 'N' ) {
+                    onPath = 'Y';
+                    d++;
+                    int ans = check( mouseDes, catPos, catTurn );
+                    d--;
+                    onPath = 'N';
+                    if( ans == mouseWin ) {
+                        std::cout << d << "[" << mousePos << "][" << catPos << "][m] = mouse" << std::endl;
+                        return current = mouseWin;
+                    }
+                    if( ans == draw ) canDraw = true;
                 }
-                if( ans == draw ) canDraw = true;
             }
             if( !canDraw ) {
                 std::cout << d << "[" << mousePos << "][" << catPos << "][m] = doom" << std::endl;
                 return current = catWin;
+            } else {
+                std::cout << d << "[" << mousePos << "][" << catPos << "][m] = kite" << std::endl;
+                return current = draw;
             }
         } else { // Cat's turn
-            for( int &catDes : graph[ catPos ] ) if( catDes == mousePos ) {
-                std::cout << d << "[" << mousePos << "][" << catPos << "][c] = cat: get 'em" << std::endl;
+            for( int &catDes : G[ catPos ] ) if( catDes == mousePos ) {
+                std::cout << d << "[" << mousePos << "][" << catPos << "][c] = caught" << std::endl;
                 return current = catWin;
             }
-            for( int &catDes : graph[ catPos ] ) {
+            for( int &catDes : G[ catPos ] ) {
                 if( catDes == hole ) continue; // can't go into hole
-                d++;
-                int ans = check( mousePos, catDes, mouseTurn, table, graph );
-                d--;
-                if( ans == catWin ) {
-                    std::cout << d << "[" << mousePos << "][" << catPos << "][c] = cat" << std::endl;
-                    return current = catWin;
+                char &onPath = on[ mousePos ][ catDes ][ mouseTurn ];
+                if( onPath == 'N' ) {
+                    onPath = 'Y';
+                    d++;
+                    int ans = check( mousePos, catDes, mouseTurn );
+                    d--;
+                    onPath = 'N';
+                    if( ans == catWin ) {
+                        std::cout << d << "[" << mousePos << "][" << catPos << "][c] = cat" << std::endl;
+                        return current = catWin;
+                    }
+                    if( ans == draw ) canDraw = true;
                 }
-                if( ans == draw ) canDraw = true;
             }
             if( !canDraw ) {
-                std::cout << d << "[" << mousePos << "][" << catPos << "][c] = lost target" << std::endl;
+                std::cout << d << "[" << mousePos << "][" << catPos << "][c] = lost" << std::endl;
                 return current = mouseWin;
+            } else {
+                std::cout << d << "[" << mousePos << "][" << catPos << "][c] = hunt" << std::endl;
+                return current = draw;
             }
         }
-        std::cout << d << "[" << mousePos << "][" << catPos << "][" << (turn==catTurn?"c":"m") << "] = draw" << std::endl;
-        return draw;
     }
 };
 
