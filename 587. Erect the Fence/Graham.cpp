@@ -40,12 +40,7 @@ public:
             int orient = Xprod( step1, step2 );
             if( orient > 0 || (orient == 0 && len(top - second) < len(points[i] - second)) ) { // turing left
                 hull.push( points[i++] );
-            } else if( orient == 0 && len(top - second) > len(points[i] - second) ) { // on hull but should be under top
-                hull.pop();
-                hull.push( points[i++] );
-                hull.push( top );
-            }
-            else { // turning right
+            } else { // turning right
                 if(!hull.empty()) hull.pop();
                 else break;
             }
