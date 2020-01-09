@@ -2,7 +2,7 @@
  * brief
  */
 #include <iostream>
-#include <../Tree.hpp>
+#include "../Tree.hpp"
 #include <cstdio>
 #include <vector>
 #include "catch.hpp"
